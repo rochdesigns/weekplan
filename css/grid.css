@@ -1,0 +1,6 @@
+.notes { display: flex; flex-direction: column; height: 100%; }
+.notes-label { font-size: 10px; color: var(--muted); font-style: italic; padding: 3px 5px 0; }
+.notes-body { flex: 1; font-size: 11px; padding: 3px 5px; outline: none; overflow-y: auto;
+  white-space: pre-wrap; }
+.notes-body[data-empty]::before { content: attr(data-placeholder);
+  color: #bbb; font-style: italic; pointer-events: none; }
