@@ -1,0 +1,24 @@
+.block { border-left: 3px solid var(--cat-misc-border); background: var(--cat-misc-fill);
+  padding: 2px 5px; margin-bottom: 3px; border-radius: 3px; font-size: 11px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+.block.synced-readonly { cursor: default; }
+.block.cat-synced  { background: var(--cat-synced-fill);  border-left-color: var(--cat-synced-border); }
+.block.cat-focus   { background: var(--cat-focus-fill);   border-left-color: var(--cat-focus-border); }
+.block.cat-meeting { background: var(--cat-meeting-fill);  border-left-color: var(--cat-meeting-border); }
+.block.cat-task    { background: var(--cat-task-fill);     border-left-color: var(--cat-task-border); }
+.block.cat-misc    { background: var(--cat-misc-fill);     border-left-color: var(--cat-misc-border); }
+
+.block-form { display: flex; flex-direction: column; gap: 4px; padding: 4px;
+  background: #fff; border: 1px solid var(--accent); border-radius: 4px; margin-bottom: 4px; }
+.block-form input, .block-form select { font: inherit; font-size: 11px; padding: 2px 4px;
+  border: 1px solid var(--border); border-radius: 3px; }
+.bf-row { display: flex; align-items: center; gap: 4px; }
+.bf-row input[type=time] { flex: 1; min-width: 0; }
+.bf-dash { color: var(--muted); }
+.bf-actions { display: flex; gap: 4px; }
+.bf-actions button { font-size: 11px; padding: 2px 8px; }
+.bf-delete { color: #b00; margin-left: auto; }
+
+.overflow-badge { display: inline-block; background: var(--accent); color: #fff;
+  border-radius: 8px; padding: 1px 8px; font-size: 10px; cursor: pointer; border: none; }
+.overflow-badge:hover { filter: brightness(1.1); }
