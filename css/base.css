@@ -56,3 +56,15 @@ button:hover { background: #f0f0f0; }
 .cat-meeting { background: var(--cat-meeting-fill);  border-left: 3px solid var(--cat-meeting-border); }
 .cat-task    { background: var(--cat-task-fill);     border-left: 3px solid var(--cat-task-border); }
 .cat-misc    { background: var(--cat-misc-fill);     border-left: 3px solid var(--cat-misc-border); }
+
+/* Weekly targets */
+.target-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.target-row input[type=checkbox] { accent-color: var(--accent); }
+.target-text { flex: 1; }
+.target-text.done { text-decoration: line-through; color: #aaa; }
+.target-del { border: none; background: none; color: #bbb; font-size: 16px;
+  line-height: 1; padding: 0 4px; }
+.target-del:hover { color: #b00; background: none; }
+.target-add { border: none; background: none; color: var(--accent);
+  font-size: 12px; padding: 4px 0 0; }
+.target-add:hover { background: none; text-decoration: underline; }
