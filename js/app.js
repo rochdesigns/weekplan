@@ -6,6 +6,7 @@ import { renderWeek } from './week.js';
 import { renderTargets } from './targets.js';
 import { renderMiniCal } from './mini-cal.js';
 import { blockForm } from './blocks.js';
+import { openModal } from './modal.js';
 import * as gcal from './gcal.js';
 
 const els = {
@@ -61,22 +62,23 @@ function shiftMonth(delta) {
 }
 
 function openAddForm(dateStr) {
-  const events = els.grid.querySelector(`.events[data-date="${dateStr}"]`);
-  if (!events || events.querySelector('.block-form')) return;
+  let close;
   const form = blockForm({
     dateStr,
-    onSaved: render,
-    onCancel: render,
+    onSaved: () => { if (close) close(); render(); },
+    onCancel: () => { if (close) close(); },
   });
-  events.insertBefore(form, events.querySelector('.add-block'));
-  form.querySelector('input[name="time"]').focus();
+  close = openModal({ title: 'New block', body: form });
 }
 
 function openEditForm(block) {
-  const events = els.grid.querySelector(`.events[data-date="${block.date}"]`);
-  if (!events || events.querySelector('.block-form')) return;
-  const form = blockForm({ block, dateStr: block.date, onSaved: render, onCancel: render });
-  events.insertBefore(form, events.querySelector('.add-block'));
+  let close;
+  const form = blockForm({
+    block, dateStr: block.date,
+    onSaved: () => { if (close) close(); render(); },
+    onCancel: () => { if (close) close(); },
+  });
+  close = openModal({ title: 'Edit block', body: form });
 }
 
 async function renderPills() {
@@ -124,7 +126,9 @@ document.getElementById('nav-today').addEventListener('click', () => {
   render();
 });
 document.getElementById('btn-add').addEventListener('click', () => {
-  openAddForm(toISODate(state.monday));
+  // Default the new block to today when the current week is in view, else the viewed Monday.
+  const inView = weekKey(today) === weekKey(state.monday);
+  openAddForm(inView ? toISODate(today) : toISODate(state.monday));
 });
 
 render();

@@ -1,4 +1,5 @@
 import * as store from './store.js';
+import { openModal } from './modal.js';
 
 export async function renderTargets(container, weekKey) {
   const targets = await store.getTargets(weekKey);
@@ -33,13 +34,31 @@ export async function renderTargets(container, weekKey) {
   const add = document.createElement('button');
   add.className = 'target-add';
   add.textContent = '+ Add target';
-  add.addEventListener('click', async () => {
-    const text = prompt('New target:');
-    if (text && text.trim()) {
-      targets.push({ id: store.uuid(), text: text.trim(), done: false });
-      await store.saveTargets(weekKey, targets);
-      renderTargets(container, weekKey);
-    }
-  });
+  add.addEventListener('click', () => openTargetForm(container, weekKey, targets));
   container.appendChild(add);
+}
+
+function openTargetForm(container, weekKey, targets) {
+  let close;
+  const form = document.createElement('form');
+  form.className = 'target-form';
+  form.innerHTML = `
+    <label class="bf-field"><span class="bf-lab">Target</span>
+      <input type="text" name="text" placeholder="e.g. Ship plugin v2.32.0" required></label>
+    <div class="bf-actions">
+      <button type="button" class="bf-cancel">Cancel</button>
+      <button type="submit" class="btn-primary">Add target</button>
+    </div>
+  `;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = new FormData(form).get('text').trim();
+    if (!text) return;
+    targets.push({ id: store.uuid(), text, done: false });
+    await store.saveTargets(weekKey, targets);
+    if (close) close();
+    renderTargets(container, weekKey);
+  });
+  form.querySelector('.bf-cancel').addEventListener('click', () => { if (close) close(); });
+  close = openModal({ title: 'New target', body: form });
 }

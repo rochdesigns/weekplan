@@ -54,50 +54,71 @@ export async function deleteBlock(dateStr, id) {
   await store.saveBlocks(wk, list.filter(b => b.id !== id));
 }
 
+// Edit a block, moving it to a new day if the date changed (preserving its id).
+export async function saveBlockEdit(oldDateStr, id, data) {
+  const newDate = data.date || oldDateStr;
+  if (newDate === oldDateStr) {
+    await updateBlock(oldDateStr, id, data);
+    return;
+  }
+  await deleteBlock(oldDateStr, id);
+  const wk = weekKey(parseISODate(newDate));
+  const list = await store.getBlocks(wk);
+  list.push({ id, calendarId: null, ...data, date: newDate });
+  await store.saveBlocks(wk, list);
+}
+
 function escAttr(s) {
   return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 }
 
 export function blockForm({ block, dateStr, onSaved, onCancel }) {
   const editing = !!block;
+  const initialDate = block?.date || dateStr;
   const form = document.createElement('form');
   form.className = 'block-form';
   form.innerHTML = `
-    <div class="bf-row">
-      <input type="time" name="time" value="${escAttr(block?.time)}" required>
-      <span class="bf-dash">–</span>
-      <input type="time" name="endTime" value="${escAttr(block?.endTime)}">
+    <label class="bf-field"><span class="bf-lab">Day</span>
+      <input type="date" name="date" value="${escAttr(initialDate)}" required></label>
+    <div class="bf-times">
+      <label class="bf-field"><span class="bf-lab">Start</span>
+        <input type="time" name="time" value="${escAttr(block?.time)}" required></label>
+      <label class="bf-field"><span class="bf-lab">End</span>
+        <input type="time" name="endTime" value="${escAttr(block?.endTime)}"></label>
     </div>
-    <input type="text" name="title" placeholder="Title" value="${escAttr(block?.title)}" required>
-    <select name="category">
-      ${CATEGORIES.filter(c => c.value !== 'synced')
-        .map(c => `<option value="${c.value}" ${block?.category === c.value ? 'selected' : ''}>${c.label}</option>`)
-        .join('')}
-    </select>
+    <label class="bf-field"><span class="bf-lab">Title</span>
+      <input type="text" name="title" value="${escAttr(block?.title)}" placeholder="e.g. Team standup" required></label>
+    <label class="bf-field"><span class="bf-lab">Category</span>
+      <select name="category">
+        ${CATEGORIES.filter(c => c.value !== 'synced')
+          .map(c => `<option value="${c.value}" ${block?.category === c.value ? 'selected' : ''}>${c.label}</option>`)
+          .join('')}
+      </select></label>
     <div class="bf-actions">
-      <button type="submit" class="btn-primary">Save</button>
-      <button type="button" class="bf-cancel">Cancel</button>
       ${editing ? '<button type="button" class="bf-delete">Delete</button>' : ''}
+      <button type="button" class="bf-cancel">Cancel</button>
+      <button type="submit" class="btn-primary">Save block</button>
     </div>
   `;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
+    const date = fd.get('date') || initialDate;
     const data = {
       time: fd.get('time'),
       endTime: fd.get('endTime') || '',
       title: fd.get('title').trim(),
       category: fd.get('category'),
     };
-    if (!data.title) return;
-    if (editing) await updateBlock(dateStr, block.id, data);
-    else await addBlock(dateStr, data);
+    if (!data.title || !date) return;
+    if (editing) await saveBlockEdit(block.date, block.id, { ...data, date });
+    else await addBlock(date, data);
     onSaved && onSaved();
   });
   form.querySelector('.bf-cancel').addEventListener('click', () => onCancel && onCancel());
   if (editing) {
     form.querySelector('.bf-delete').addEventListener('click', async () => {
-      await deleteBlock(dateStr, block.id);
+      await deleteBlock(block.date, block.id);
       onSaved && onSaved();
     });
   }

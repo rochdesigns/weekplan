@@ -1,0 +1,41 @@
+.modal-overlay { position: fixed; inset: 0; z-index: 1000; padding: 20px;
+  background: rgba(22, 35, 58, .5); backdrop-filter: blur(2px);
+  display: grid; place-items: center; animation: modal-fade .15s ease; }
+.modal { background: var(--plane); border-radius: 16px; width: 100%; max-width: 384px;
+  box-shadow: 0 24px 60px -16px rgba(22, 35, 58, .5); overflow: hidden;
+  animation: modal-pop .16s ease; }
+.modal-head { display: flex; align-items: center; justify-content: space-between;
+  padding: 17px 18px 0; }
+.modal-title { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.modal-close { border: none; background: none; font-size: 22px; line-height: 1;
+  color: var(--ink-faint); padding: 0 5px; border-radius: 6px; }
+.modal-close:hover { background: none; color: var(--ink); }
+.modal-body { padding: 14px 18px 18px; }
+
+@keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(6px) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Shared form fields (block + target) */
+.block-form, .target-form { display: flex; flex-direction: column; gap: 13px; }
+.bf-field { display: flex; flex-direction: column; gap: 5px; }
+.bf-lab { font-size: 11px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-faint); }
+.bf-field input, .bf-field select { font: inherit; font-size: 14px; padding: 9px 11px;
+  border: 1px solid var(--hairline); border-radius: 9px; color: var(--ink);
+  background: #fff; width: 100%; }
+.bf-field input:focus, .bf-field select:focus { outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(24, 95, 165, .15); }
+.bf-times { display: flex; gap: 10px; }
+.bf-times .bf-field { flex: 1; min-width: 0; }
+.bf-actions { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 4px; }
+.bf-actions button { padding: 8px 15px; font-size: 13px; }
+.bf-cancel { color: var(--ink-soft); }
+.bf-delete { color: #b2402f; border-color: #e7c7c1; margin-right: auto; }
+.bf-delete:hover { background: #fbeeec; border-color: #b2402f; }
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay, .modal { animation: none; }
+}

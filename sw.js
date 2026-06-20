@@ -1,10 +1,10 @@
-const CACHE = 'weekplan-v2';
+const CACHE = 'weekplan-v3';
 const ASSETS = [
   './', './index.html', './manifest.json',
-  './css/base.css', './css/grid.css', './css/mini-cal.css', './css/blocks.css',
+  './css/base.css', './css/grid.css', './css/mini-cal.css', './css/blocks.css', './css/modal.css',
   './js/app.js', './js/dates.js', './js/store.js', './js/blocks.js',
   './js/notes.js', './js/sanitize.js', './js/targets.js', './js/week.js',
-  './js/mini-cal.js', './js/gcal.js',
+  './js/mini-cal.js', './js/gcal.js', './js/modal.js',
   './icons/icon-192.png', './icons/icon-512.png',
 ];
 
