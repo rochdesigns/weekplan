@@ -1,52 +1,70 @@
-.notes { display: flex; flex-direction: column; height: 100%; }
-.notes-label { font-size: 10px; color: var(--muted); font-style: italic; padding: 3px 5px 0; }
-.notes-body { flex: 1; font-size: 11px; padding: 3px 5px; outline: none; overflow-y: auto;
-  white-space: pre-wrap; }
-.notes-body:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 3px; }
-.notes-body[data-empty]::before { content: attr(data-placeholder);
-  color: #bbb; font-style: italic; pointer-events: none; }
+/* Zone 3 — the "desk pad": one continuous surface, hairline-divided lanes */
+#weekgrid { display: grid; grid-template-columns: repeat(7, 1fr);
+  margin: 0 28px 22px; background: var(--plane); border: 1px solid var(--hairline);
+  border-radius: 14px; box-shadow: var(--shadow-pad); overflow: hidden; flex: 1;
+  align-items: stretch; min-height: 360px; }
 
-/* WYSIWYG toolbar — visible only while the note is being edited */
-.notes-toolbar { display: none; gap: 2px; padding: 2px 4px 0; flex-wrap: wrap; }
-.notes.editing .notes-toolbar { display: flex; }
-.nt-btn { font-size: 11px; line-height: 1; padding: 2px 5px; min-width: 20px;
-  border: 1px solid var(--border); background: #fff; border-radius: 3px; color: #333; }
-.nt-btn:hover { background: #eef2f7; }
-.notes-body ul, .notes-body ol { margin: 2px 0; padding-left: 18px; }
-.notes-body p { margin: 2px 0; }
+.day-col { display: flex; flex-direction: column; position: relative;
+  border-left: 1px solid var(--hairline); min-height: 340px; }
+.day-col:first-child { border-left: none; }
+.day-col.weekend { background: #fcfcfd; }
 
-#weekgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
-  padding: 10px 16px; flex: 1; align-items: stretch; }
-.day-col { display: flex; flex-direction: column; background: var(--panel);
-  border: 1px solid var(--border); border-radius: 6px; overflow: hidden; min-height: 320px; }
-.day-col.weekend { opacity: .75; }
-.day-head { font-size: 11px; font-weight: 700; padding: 5px 7px;
-  border-bottom: 1px solid var(--border); color: #333; }
-.day-head.is-today { background: var(--today-tint); color: var(--accent);
-  border-bottom-color: #c5d8f0; }
-.events { height: 30%; min-height: 90px; padding: 4px; overflow: hidden;
-  position: relative; border-bottom: 1px solid var(--border); }
-.events.expanded { height: auto; overflow: visible; }
-.add-block { display: block; width: 100%; text-align: right; border: none;
-  background: none; color: var(--accent); font-size: 11px; padding: 2px 2px 0; }
-.add-block:hover { background: none; text-decoration: underline; }
-.notes { background: #fafafa; flex: 1; }
+/* Day header — big tabular date + uppercase weekday */
+.day-head { display: flex; align-items: baseline; gap: 7px; padding: 12px 12px 9px;
+  border-bottom: 1px solid var(--hairline); }
+.day-head .dow { font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-faint); }
+.day-head .dnum { font-size: 19px; font-weight: 700; line-height: 1;
+  color: var(--ink); font-variant-numeric: tabular-nums; }
 
-/* Subtle interactions */
-.block, .mc-day, .add-block { transition: background-color .12s ease, filter .12s ease; }
+/* Today lane: accent spine + wash + emphasized header */
+.day-col.is-today { background: var(--today-tint); }
+.day-col.is-today::before { content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; background: var(--accent); }
+.day-col.is-today .day-head { border-bottom-color: #cfe0f3; }
+.day-col.is-today .dow { color: var(--accent); }
+
+/* Events zone (top portion) */
+.events { padding: 8px; overflow: hidden; position: relative; min-height: 96px;
+  border-bottom: 1px solid var(--hairline); }
+.events.expanded { overflow: visible; }
+.add-block { display: block; width: 100%; text-align: left; border: none;
+  background: none; color: var(--ink-faint); font-size: 12px; font-weight: 600;
+  padding: 4px 2px 0; transition: color .12s ease; }
+.add-block:hover { background: none; color: var(--accent); }
 
 /* Empty events hint */
-.events:not(:has(.block))::before { content: 'No events'; display: block;
-  font-size: 10px; color: #c4c4c4; font-style: italic; padding: 2px 2px 4px; }
+.events:not(:has(.block))::before { content: 'Nothing planned'; display: block;
+  font-size: 11px; color: var(--ink-faint); opacity: .65; padding: 2px 2px 6px; }
 .events.expanded::before, .events:has(.block)::before { content: none; }
 
-/* Mobile: stack header panel, make week grid horizontally scrollable day cards */
+/* Notes — ruled paper */
+.notes { display: flex; flex-direction: column; flex: 1; }
+.notes-label { font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-faint); padding: 8px 10px 2px; }
+.notes-body { flex: 1; font-size: 12px; line-height: 20px; padding: 0 10px 8px;
+  outline: none; overflow-y: auto; white-space: pre-wrap; color: var(--ink);
+  background-image: repeating-linear-gradient(var(--plane), var(--plane) 19px, var(--rule) 19px, var(--rule) 20px);
+  background-position: 0 8px; }
+.day-col.is-today .notes-body {
+  background-image: repeating-linear-gradient(var(--today-tint), var(--today-tint) 19px, #dbe7f5 19px, #dbe7f5 20px); }
+.notes-body:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: 4px; }
+.notes-body[data-empty]::before { content: attr(data-placeholder);
+  color: var(--ink-faint); opacity: .7; font-style: italic; pointer-events: none; }
+.notes-body ul, .notes-body ol { margin: 0; padding-left: 18px; }
+.notes-body p { margin: 0; }
+
+/* WYSIWYG toolbar — visible only while editing */
+.notes-toolbar { display: none; gap: 3px; padding: 4px 10px 0; flex-wrap: wrap; }
+.notes.editing .notes-toolbar, .notes:focus-within .notes-toolbar { display: flex; }
+.nt-btn { font-size: 12px; line-height: 1; padding: 3px 7px; min-width: 24px;
+  border: 1px solid var(--hairline); background: var(--plane); border-radius: 6px;
+  color: var(--ink); transition: background-color .12s ease, border-color .12s ease; }
+.nt-btn:hover { background: #eef2f7; border-color: var(--ink-faint); }
+
+/* Mobile: swipeable day lanes */
 @media (max-width: 720px) {
-  #topbar { flex-wrap: wrap; row-gap: 6px; }
-  .weeknav { order: 3; flex-basis: 100%; }
-  #headerpanel { flex-direction: column; }
-  .hp-minical { width: 100%; }
-  #weekgrid { grid-auto-flow: column; grid-template-columns: none;
-    grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; }
-  .day-col { scroll-snap-align: start; min-height: 70vh; }
+  #weekgrid { margin: 0 16px 18px; grid-auto-flow: column; grid-template-columns: none;
+    grid-auto-columns: 82%; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .day-col { scroll-snap-align: start; min-height: 66vh; }
 }

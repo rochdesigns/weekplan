@@ -13,11 +13,17 @@ export function renderWeek(root, { monday, blocks, notes, today, onAdd, onEditBl
     const col = document.createElement('div');
     col.className = 'day-col';
     if (i >= 5) col.classList.add('weekend');
+    if (isSameDay(day, today)) col.classList.add('is-today');
 
     const head = document.createElement('div');
     head.className = 'day-head';
-    if (isSameDay(day, today)) head.classList.add('is-today');
-    head.textContent = `${DOW_SHORT[i].toUpperCase()} ${day.getDate()}`;
+    const dow = document.createElement('span');
+    dow.className = 'dow';
+    dow.textContent = DOW_SHORT[i].toUpperCase();
+    const dnum = document.createElement('span');
+    dnum.className = 'dnum';
+    dnum.textContent = day.getDate();
+    head.append(dow, dnum);
     col.appendChild(head);
 
     const events = document.createElement('div');

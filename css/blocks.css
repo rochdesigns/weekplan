@@ -1,11 +1,12 @@
 .block { border-left: 3px solid var(--cat-misc-border); background: var(--cat-misc-fill);
-  padding: 2px 5px; margin-bottom: 3px; border-radius: 3px; font-size: 11px;
+  padding: 4px 8px; margin-bottom: 5px; border-radius: 6px; font-size: 11.5px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
-  font-variant-numeric: tabular-nums;
-  transition: filter .12s ease, transform .1s ease; }
-.block:hover { filter: brightness(.97); }
+  color: var(--ink); font-variant-numeric: tabular-nums;
+  transition: filter .12s ease, transform .1s ease, box-shadow .12s ease; }
+.block:hover { filter: brightness(.975); box-shadow: 0 1px 4px rgba(22,35,58,.12); }
 .block:active { transform: scale(.97); }
 .block.synced-readonly { cursor: default; }
+.block.synced-readonly:hover { filter: none; box-shadow: none; }
 .block.synced-readonly:active { transform: none; }
 .block.cat-synced  { background: var(--cat-synced-fill);  border-left-color: var(--cat-synced-border); }
 .block.cat-focus   { background: var(--cat-focus-fill);   border-left-color: var(--cat-focus-border); }
@@ -13,17 +14,21 @@
 .block.cat-task    { background: var(--cat-task-fill);     border-left-color: var(--cat-task-border); }
 .block.cat-misc    { background: var(--cat-misc-fill);     border-left-color: var(--cat-misc-border); }
 
-.block-form { display: flex; flex-direction: column; gap: 4px; padding: 4px;
-  background: #fff; border: 1px solid var(--accent); border-radius: 4px; margin-bottom: 4px; }
-.block-form input, .block-form select { font: inherit; font-size: 11px; padding: 2px 4px;
-  border: 1px solid var(--border); border-radius: 3px; }
-.bf-row { display: flex; align-items: center; gap: 4px; }
+.block-form { display: flex; flex-direction: column; gap: 6px; padding: 8px;
+  background: var(--plane); border: 1px solid var(--accent); border-radius: 10px;
+  box-shadow: 0 8px 22px -10px rgba(22,35,58,.35); margin-bottom: 6px; }
+.block-form input, .block-form select { font: inherit; font-size: 12px; padding: 5px 7px;
+  border: 1px solid var(--hairline); border-radius: 7px; color: var(--ink); background: #fff; }
+.block-form input:focus, .block-form select:focus { outline: none; border-color: var(--accent); }
+.bf-row { display: flex; align-items: center; gap: 6px; }
 .bf-row input[type=time] { flex: 1; min-width: 0; }
-.bf-dash { color: var(--muted); }
-.bf-actions { display: flex; gap: 4px; }
-.bf-actions button { font-size: 11px; padding: 2px 8px; }
-.bf-delete { color: #b00; margin-left: auto; }
+.bf-dash { color: var(--ink-faint); }
+.bf-actions { display: flex; gap: 6px; align-items: center; }
+.bf-actions button { font-size: 12px; padding: 5px 11px; }
+.bf-delete { color: #b2402f; border-color: #e7c7c1; margin-left: auto; }
+.bf-delete:hover { background: #fbeeec; border-color: #b2402f; }
 
-.overflow-badge { display: inline-block; background: var(--accent); color: #fff;
-  border-radius: 8px; padding: 1px 8px; font-size: 10px; cursor: pointer; border: none; }
-.overflow-badge:hover { filter: brightness(1.1); }
+.overflow-badge { display: inline-block; background: var(--ink); color: #fff;
+  border-radius: 999px; padding: 2px 10px; font-size: 10.5px; font-weight: 600;
+  cursor: pointer; border: none; margin-top: 2px; }
+.overflow-badge:hover { background: var(--accent); }
