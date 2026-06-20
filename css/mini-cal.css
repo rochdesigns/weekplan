@@ -5,8 +5,9 @@
 .mc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; text-align: center; }
 .mc-dow { font-size: 10px; color: #aaa; padding: 2px 0; }
 .mc-day { position: relative; font-size: 11px; border: none; background: none;
-  padding: 4px 0; border-radius: 3px; color: #333; }
+  padding: 4px 0; border-radius: 3px; color: #333; font-variant-numeric: tabular-nums; }
 .mc-day:hover { background: #eef2f7; }
+@media (max-width: 720px) { .mc-day { padding: 10px 0; min-height: 44px; } }
 .mc-day.other-month { color: #ccc; }
 .mc-day.in-week { background: var(--today-tint); color: var(--accent); }
 .mc-day.is-today { font-weight: 700; outline: 1px solid var(--accent); outline-offset: -1px; }

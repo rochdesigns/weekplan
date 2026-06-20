@@ -1,7 +1,12 @@
 .block { border-left: 3px solid var(--cat-misc-border); background: var(--cat-misc-fill);
   padding: 2px 5px; margin-bottom: 3px; border-radius: 3px; font-size: 11px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: filter .12s ease, transform .1s ease; }
+.block:hover { filter: brightness(.97); }
+.block:active { transform: scale(.97); }
 .block.synced-readonly { cursor: default; }
+.block.synced-readonly:active { transform: none; }
 .block.cat-synced  { background: var(--cat-synced-fill);  border-left-color: var(--cat-synced-border); }
 .block.cat-focus   { background: var(--cat-focus-fill);   border-left-color: var(--cat-focus-border); }
 .block.cat-meeting { background: var(--cat-meeting-fill);  border-left-color: var(--cat-meeting-border); }
