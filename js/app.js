@@ -6,6 +6,7 @@ import { renderWeek } from './week.js';
 import { renderTargets } from './targets.js';
 import { renderMiniCal } from './mini-cal.js';
 import { blockForm } from './blocks.js';
+import * as gcal from './gcal.js';
 
 const els = {
   label:   document.getElementById('weeklabel'),
@@ -87,6 +88,23 @@ async function renderPills() {
     pill.textContent = cal === 'google' ? 'Google Cal' : cal;
     els.pills.appendChild(pill);
   }
+  const connected = await gcal.isConnected();
+  const btn = document.createElement('button');
+  btn.className = 'btn-gcal';
+  btn.textContent = connected ? 'Disconnect' : 'Connect Google';
+  btn.addEventListener('click', async () => {
+    if (connected) {
+      await gcal.disconnect();
+    } else {
+      const res = await gcal.connect();
+      if (!res.ok && res.reason === 'not-configured') {
+        alert('Google Calendar sync is optional and not configured yet.\n' +
+              'Add your OAuth client ID in js/gcal.js (CLIENT_ID) to enable it.');
+      }
+    }
+    render();
+  });
+  els.pills.appendChild(btn);
 }
 
 // Navigation
