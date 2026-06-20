@@ -54,17 +54,21 @@ export async function deleteBlock(dateStr, id) {
   await store.saveBlocks(wk, list.filter(b => b.id !== id));
 }
 
+function escAttr(s) {
+  return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
 export function blockForm({ block, dateStr, onSaved, onCancel }) {
   const editing = !!block;
   const form = document.createElement('form');
   form.className = 'block-form';
   form.innerHTML = `
     <div class="bf-row">
-      <input type="time" name="time" value="${block?.time || ''}" required>
+      <input type="time" name="time" value="${escAttr(block?.time)}" required>
       <span class="bf-dash">–</span>
-      <input type="time" name="endTime" value="${block?.endTime || ''}">
+      <input type="time" name="endTime" value="${escAttr(block?.endTime)}">
     </div>
-    <input type="text" name="title" placeholder="Title" value="${block?.title ? block.title.replace(/"/g, '&quot;') : ''}" required>
+    <input type="text" name="title" placeholder="Title" value="${escAttr(block?.title)}" required>
     <select name="category">
       ${CATEGORIES.filter(c => c.value !== 'synced')
         .map(c => `<option value="${c.value}" ${block?.category === c.value ? 'selected' : ''}>${c.label}</option>`)

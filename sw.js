@@ -4,6 +4,7 @@ const ASSETS = [
   './css/base.css', './css/grid.css', './css/mini-cal.css', './css/blocks.css',
   './js/app.js', './js/dates.js', './js/store.js', './js/blocks.js',
   './js/notes.js', './js/targets.js', './js/week.js', './js/mini-cal.js', './js/gcal.js',
+  './icons/icon-192.png', './icons/icon-512.png',
 ];
 
 self.addEventListener('install', (e) => {
