@@ -5,6 +5,15 @@
 .notes-body[data-empty]::before { content: attr(data-placeholder);
   color: #bbb; font-style: italic; pointer-events: none; }
 
+/* WYSIWYG toolbar — visible only while the note is being edited */
+.notes-toolbar { display: none; gap: 2px; padding: 2px 4px 0; flex-wrap: wrap; }
+.notes.editing .notes-toolbar { display: flex; }
+.nt-btn { font-size: 11px; line-height: 1; padding: 2px 5px; min-width: 20px;
+  border: 1px solid var(--border); background: #fff; border-radius: 3px; color: #333; }
+.nt-btn:hover { background: #eef2f7; }
+.notes-body ul, .notes-body ol { margin: 2px 0; padding-left: 18px; }
+.notes-body p { margin: 2px 0; }
+
 #weekgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px;
   padding: 10px 16px; flex: 1; align-items: stretch; }
 .day-col { display: flex; flex-direction: column; background: var(--panel);
