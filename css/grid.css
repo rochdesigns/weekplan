@@ -21,3 +21,22 @@
   background: none; color: var(--accent); font-size: 11px; padding: 2px 2px 0; }
 .add-block:hover { background: none; text-decoration: underline; }
 .notes { background: #fafafa; flex: 1; }
+
+/* Subtle interactions */
+.block, .mc-day, .add-block { transition: background-color .12s ease, filter .12s ease; }
+
+/* Empty events hint */
+.events:not(:has(.block))::before { content: 'No events'; display: block;
+  font-size: 10px; color: #c4c4c4; font-style: italic; padding: 2px 2px 4px; }
+.events.expanded::before, .events:has(.block)::before { content: none; }
+
+/* Mobile: stack header panel, make week grid horizontally scrollable day cards */
+@media (max-width: 720px) {
+  #topbar { flex-wrap: wrap; row-gap: 6px; }
+  .weeknav { order: 3; flex-basis: 100%; }
+  #headerpanel { flex-direction: column; }
+  .hp-minical { width: 100%; }
+  #weekgrid { grid-auto-flow: column; grid-template-columns: none;
+    grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .day-col { scroll-snap-align: start; min-height: 70vh; }
+}
