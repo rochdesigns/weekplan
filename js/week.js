@@ -30,8 +30,40 @@ export function renderWeek(root, { monday, blocks, notes, today, onAdd, onEditBl
     add.addEventListener('click', () => onAdd(dateStr));
     events.appendChild(add);
     col.appendChild(events);
+    applyOverflow(events);
 
     col.appendChild(notesEl(dateStr, notes[dateStr] || ''));
     root.appendChild(col);
+  });
+}
+
+function applyOverflow(events) {
+  // Run after the element is in the DOM so heights are measured.
+  requestAnimationFrame(() => {
+    if (events.classList.contains('expanded')) return;
+    const add = events.querySelector('.add-block');
+    const chips = [...events.querySelectorAll('.block')];
+    chips.forEach(c => (c.style.display = ''));
+    const existing = events.querySelector('.overflow-badge');
+    if (existing) existing.remove();
+    if (events.scrollHeight <= events.clientHeight) return;
+
+    const badge = document.createElement('button');
+    badge.className = 'overflow-badge';
+    badge.addEventListener('click', () => {
+      events.classList.add('expanded');
+      chips.forEach(c => (c.style.display = ''));
+      badge.remove();
+    });
+    events.insertBefore(badge, add);
+
+    let hidden = 0;
+    for (let i = chips.length - 1; i >= 0; i--) {
+      if (events.scrollHeight <= events.clientHeight) break;
+      chips[i].style.display = 'none';
+      hidden++;
+    }
+    if (hidden === 0) { badge.remove(); return; }
+    badge.textContent = `+${hidden} more`;
   });
 }
