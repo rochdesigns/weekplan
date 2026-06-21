@@ -69,7 +69,6 @@ manifest.json  sw.js  PWA manifest + service worker
 css/   base · grid · mini-cal · blocks · modal
 js/    app · store · dates · week · blocks · notes · sanitize · targets · mini-cal · gcal · modal
 test/  dates · store · sanitize  (node --test)
-docs/superpowers/     design spec + implementation plan
 ```
 
 `store.js` is the single module that touches `localStorage` and exposes an **async** API — the intended seam for swapping in a backend later without touching the UI.

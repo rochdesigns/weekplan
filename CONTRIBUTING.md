@@ -38,7 +38,6 @@ index.html            app shell
 css/                  base · grid · mini-cal · blocks · modal
 js/   app · store · dates · week · blocks · notes · sanitize · targets · mini-cal · gcal · modal
 test/                 node --test (dates · store · sanitize)
-docs/superpowers/     design spec + implementation plan (good background reading)
 ```
 
 ## Pull requests
