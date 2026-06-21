@@ -1,0 +1,10 @@
+{
+  "name": "weekplan",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A simple weekly planner PWA. No runtime dependencies; package.json declares ESM so node --test can run the unit tests.",
+  "scripts": {
+    "test": "node --test test/"
+  }
+}
