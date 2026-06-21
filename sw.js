@@ -1,4 +1,4 @@
-const CACHE = 'weekplan-v3';
+const CACHE = 'weekplan-v4';
 const ASSETS = [
   './', './index.html', './manifest.json',
   './css/base.css', './css/grid.css', './css/mini-cal.css', './css/blocks.css', './css/modal.css',

@@ -78,10 +78,6 @@ docs/superpowers/     design spec + implementation plan
 
 **Deferred to V2:** user accounts, cross-device sync, a backend/database, billing, Apple/Outlook calendars, writing back to Google, recurring events, drag-and-drop, dark mode.
 
-## Notes
-
-- The PWA icons in `icons/` are placeholders — swap in real artwork before shipping a branded build.
-
 ## License
 
 [MIT](LICENSE) © 2026 rochdesigns
