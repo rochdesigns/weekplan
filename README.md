@@ -4,6 +4,8 @@ A simple, opinionated **weekly planner** — see your whole week at a glance, dr
 
 Built as a deliberately minimal **vanilla** app: plain HTML/CSS/JS ES modules, **no framework, no build step, no backend.** All your data lives in `localStorage` on your device.
 
+**▶ Live demo: https://rochdesigns.github.io/weekplan/**
+
 ## Features
 
 - **Week grid** — Monday–Sunday, each day split into time blocks (top) and freeform notes (bottom)
