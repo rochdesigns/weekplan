@@ -6,6 +6,8 @@ Built as a deliberately minimal **vanilla** app: plain HTML/CSS/JS ES modules, *
 
 **▶ Live demo: https://rochdesigns.github.io/weekplan/**
 
+![Weekplan — a week at a glance with time blocks, notes, targets and a mini calendar](screenshots/weekplan.png)
+
 ## Features
 
 - **Week grid** — Monday–Sunday, each day split into time blocks (top) and freeform notes (bottom)
